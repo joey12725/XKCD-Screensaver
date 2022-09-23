@@ -6,6 +6,9 @@ import webbrowser
 import uuid
 from joblib import Parallel, delayed
 
+api_key = #your key here
+api_secret = #your secret here
+
 def get_latest_xkcd():
     """Get the latest XKCD comic."""
     url = 'https://xkcd.com/info.0.json'
@@ -66,11 +69,11 @@ def fetch_and_upload(i):
     UploadFlickr(flickr, filename, 'xkcd{}'.format(i), 'xkcd{}'.format(i), 'xkcd')
 
 def fetch_range(start, end):
-    flickr = ConnectFlickr('06353c38575e78d7ceebba984691b31b', 'd04263b48cf04c3f')
+    flickr = ConnectFlickr(api_key, api_secret)
     Parallel(n_jobs=50)(delayed(fetch_and_upload)(i) for i in range(2000, 2664)) # 2664 is the latest xkcd
 
 def fetch_newest():
-    flickr = ConnectFlickr('06353c38575e78d7ceebba984691b31b', 'd04263b48cf04c3f')
+    flickr = ConnectFlickr(api_key, api_secret)
     print('getting xkcd')
     comic = download_xkcd(get_latest_xkcd())
     filename = 'xkcd{}.png'.format(uuid.uuid4())
